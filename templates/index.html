@@ -3,95 +3,230 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Car Price Predictor 🚗</title>
-  <style>
-    /* ====== Global Styles ====== */
+  <title>Car Price Predictor</title>
+ <style>
+    :root {
+      --ink: #f9f9f9;
+      --card-bg: rgba(9, 17, 28, 0.78);
+      --card-border: rgba(255, 255, 255, 0.25);
+      --accent: #ffd166;
+      --accent-2: #56cfe1;
+      --danger: #ff6b6b;
+      --text-soft: rgba(255, 255, 255, 0.78);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #1d3557, #457b9d);
-      color: #f1faee;
+      margin: 0;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
+      padding: 24px;
+      color: var(--ink);
+      font-family: 'Manrope', sans-serif;
+      background:
+        linear-gradient(130deg, rgba(2, 10, 19, 0.82), rgba(2, 10, 19, 0.45)),
+        url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat fixed;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      z-index: 0;
+      width: 38vmax;
+      height: 38vmax;
+      border-radius: 999px;
+      filter: blur(60px);
+      pointer-events: none;
+      opacity: 0.42;
+    }
+
+    body::before {
+      top: -10vmax;
+      left: -8vmax;
+      background: radial-gradient(circle, #56cfe1 0%, transparent 70%);
+    }
+
+    body::after {
+      bottom: -12vmax;
+      right: -6vmax;
+      background: radial-gradient(circle, #ff9f1c 0%, transparent 70%);
     }
 
     .container {
-      background: #ffffff;
-      color: #1d3557;
-      border-radius: 16px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
-      padding: 40px;
+      position: relative;
+      z-index: 1;
       width: 100%;
-      max-width: 500px;
-      text-align: center;
-      animation: fadeIn 1s ease-in-out;
+      max-width: 560px;
+      border-radius: 26px;
+      padding: 30px;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.4);
+      animation: riseIn 700ms ease;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes riseIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .heading-tag {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, rgba(255, 209, 102, 0.25), rgba(86, 207, 225, 0.25));
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      margin-bottom: 10px;
     }
 
     h1 {
-      margin-bottom: 20px;
-      font-size: 2rem;
-      color: #e63946;
+      margin: 0;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.9rem, 4vw, 2.4rem);
+      line-height: 1.15;
+      letter-spacing: 0.01em;
+      color: #ffffff;
+      text-shadow: 0 8px 26px rgba(0, 0, 0, 0.35);
+    }
+
+    .subheading {
+      margin: 12px 0 24px;
+      color: var(--text-soft);
+      font-size: 0.96rem;
+      line-height: 1.5;
     }
 
     label {
       display: block;
-      margin: 12px 0 6px;
-      font-weight: 600;
+      text-align: left;
+      margin: 12px 0 8px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #f8fbff;
+      letter-spacing: 0.02em;
     }
 
-    select, input {
+    select,
+    input {
       width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-      margin-bottom: 15px;
-      outline: none;
-      transition: 0.3s;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      padding: 12px 14px;
+      font: inherit;
+      margin-bottom: 14px;
+      transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
     }
 
-    select:focus, input:focus {
-      border-color: #457b9d;
-      box-shadow: 0 0 8px rgba(69, 123, 157, 0.5);
+    select option {
+      color: #111;
+    }
+
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.62);
+    }
+
+    select:focus,
+    input:focus {
+      outline: none;
+      border-color: var(--accent-2);
+      box-shadow: 0 0 0 4px rgba(86, 207, 225, 0.2);
+      transform: translateY(-1px);
     }
 
     button {
-      background: #1d3557;
-      color: #f1faee;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
       width: 100%;
+      margin-top: 8px;
+      border: 0;
+      border-radius: 12px;
+      padding: 14px 18px;
+      font: 800 1rem/1 'Space Grotesk', sans-serif;
+      letter-spacing: 0.02em;
+      color: #121212;
+      cursor: pointer;
+      background: linear-gradient(100deg, #ffd166, #ff9f1c 48%, #56cfe1 100%);
+      box-shadow: 0 10px 30px rgba(255, 170, 77, 0.35);
+      transition: transform 220ms ease, box-shadow 220ms ease, filter 220ms ease;
     }
 
     button:hover {
-      background: #457b9d;
+      transform: translateY(-2px);
+      filter: saturate(1.1);
+      box-shadow: 0 16px 34px rgba(86, 207, 225, 0.35);
+    }
+
+    button:active {
+      transform: translateY(0);
     }
 
     .result {
-      margin-top: 20px;
-      font-size: 1.3rem;
-      font-weight: bold;
-      color: #e63946;
-      animation: fadeIn 1s ease-in-out;
+      margin-top: 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.08);
+      padding: 12px;
+      color: #fff7d6;
+      line-height: 1.4;
+      animation: riseIn 350ms ease;
+      overflow-wrap: anywhere;
+    }
+
+    .result h2 {
+      margin: 2px 0 10px;
+      color: var(--accent);
+      font-size: 1.18rem;
+    }
+
+    .result p {
+      margin: 7px 0;
+      color: #f7faff;
+      font-size: 0.97rem;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        align-items: flex-start;
+        padding: 14px;
+      }
+
+      .container {
+        margin-top: 16px;
+        padding: 22px;
+        border-radius: 20px;
+      }
+
+      .subheading {
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <h1>Car Price Predictor 🚗</h1>
+    <h1>Car Price Predictor </h1>
     <form id="predictionForm">
       <label for="company">Select Company</label>
       <select id="company" required>
