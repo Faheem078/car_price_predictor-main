@@ -124,7 +124,8 @@ The web app makes it simple and interactive to get price estimates instantly.
 
 ### 📬 Contact
 
-Author: Faheem wajid
+Author: Muhammad Faheem wajid
+
 GitHub: Faheem078
 
 Email: Faheemtech3@gmail.com
