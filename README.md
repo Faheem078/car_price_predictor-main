@@ -30,7 +30,7 @@ The web app is built with **Flask**, and has an easy-to-use interface where user
 
 Here’s a preview of the prediction form:
 
-![Car Price Predictor Form](screenshots/form.png)
+![Car Price Predictor Form](screenshots/car.png)
 
 ---
 
